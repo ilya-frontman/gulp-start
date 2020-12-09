@@ -39,7 +39,7 @@ function browsersync() {
 }
 
 function images() {
-  return src('app/images/**/*')
+  return src('app/img/**/*')
       .pipe(imagemin([
           imagemin.gifsicle({interlaced: true}),
           imagemin.mozjpeg({quality: 75, progressive: true}),
@@ -51,11 +51,14 @@ function images() {
               ]
           })
       ]))
-      .pipe(dest('dist/images'));
+      .pipe(dest('dist/img'));
 }
 
 function styles() {
-  return src('./app/scss/style.scss')
+  return src([
+        './node_modules/normalize.css/normalize.css',
+        './app/scss/style.scss'
+      ])
       .pipe(scss({ outputStyle: "compressed" }))
       .pipe(concat('style.min.css'))
       .pipe(autoprefixer({
